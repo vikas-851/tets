@@ -7,9 +7,8 @@ app = Flask(__name__)
 
 # Replace with your email and app password
 EMAIL = "vgboss91@gmail.com"
-PASSWORD = "gvcr csbf shkw vrhh"
+PASSWORD = "gvcr csbf shkw vrhh"  # Ensure this is correct; consider using an App Password if 2FA is enabled.
 
-# Serve the HTML form at the root URL
 @app.route('/')
 def home():
     return '''
@@ -79,7 +78,7 @@ def send_email(id_name, game_uid, squad_name):
     # Email configuration
     msg = MIMEMultipart()
     msg['From'] = EMAIL
-    msg['To'] = EMAIL
+    msg['To'] = "nmesportsofficial1@gmail.com"  # New recipient email
     msg['Subject'] = "New Free Fire Tournament Registration"
     
     # Email content
@@ -99,7 +98,7 @@ def send_email(id_name, game_uid, squad_name):
         server.starttls()
         server.login(EMAIL, PASSWORD)
         text = msg.as_string()
-        server.sendmail(EMAIL, EMAIL, text)
+        server.sendmail(EMAIL, "nmesportsofficial1@gmail.com", text)  # Send to the new email address
         server.quit()
         return True
     except Exception as e:
