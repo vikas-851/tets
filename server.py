@@ -78,7 +78,7 @@ def send_email(id_name, game_uid, squad_name):
     # Email configuration
     msg = MIMEMultipart()
     msg['From'] = EMAIL
-    msg['To'] = "nmesportsofficial1@gmail.com"  # New recipient email
+    msg['To'] = "lalitprajapati9619@gmail.com"  # New recipient email
     msg['Subject'] = "New Free Fire Tournament Registration"
     
     # Email content
