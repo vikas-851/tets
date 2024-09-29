@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template_string
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -9,6 +9,7 @@ app = Flask(__name__)
 EMAIL = "vgboss91@gmail.com"
 PASSWORD = "gvcr csbf shkw vrhh"
 
+# Serve the HTML form at the root URL
 @app.route('/')
 def home():
     return '''
@@ -18,74 +19,58 @@ def home():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Free Fire Tournament Registration</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
             body {
-                background-color: #f7f7f7;
-                font-family: 'Arial', sans-serif;
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
             }
-            .form-container {
+            .registration-form {
                 background-color: #fff;
+                padding: 20px;
                 border-radius: 10px;
-                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-                padding: 30px;
-                max-width: 500px;
-                margin: 50px auto;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 300px;
             }
-            .form-container h2 {
+            .registration-form h2 {
+                margin-bottom: 20px;
                 text-align: center;
-                margin-bottom: 30px;
-                color: #333;
             }
-            .form-container button {
+            .registration-form input[type="text"], .registration-form input[type="number"] {
                 width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .registration-form button {
+                width: 100%;
+                padding: 10px;
                 background-color: #007bff;
                 color: #fff;
                 border: none;
-                padding: 15px;
                 border-radius: 5px;
-                font-size: 16px;
                 cursor: pointer;
             }
-            .form-container button:hover {
+            .registration-form button:hover {
                 background-color: #0056b3;
-            }
-            footer {
-                text-align: center;
-                padding: 10px;
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #f1f1f1;
-                font-size: 14px;
             }
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="form-container">
-                <h2>Free Fire Tournament Registration</h2>
-                <form id="registrationForm" method="POST" action="/register">
-                    <div class="mb-3">
-                        <label for="id_name" class="form-label">ID Name</label>
-                        <input type="text" class="form-control" name="id_name" id="id_name" placeholder="Enter your ID Name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="game_uid" class="form-label">Game UID</label>
-                        <input type="text" class="form-control" name="game_uid" id="game_uid" placeholder="Enter your Game UID" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="squad_name" class="form-label">Squad Name</label>
-                        <input type="text" class="form-control" name="squad_name" id="squad_name" placeholder="Enter your Squad Name" required>
-                    </div>
-                    <button type="submit">Submit Registration</button>
-                </form>
-            </div>
+        <div class="registration-form">
+            <h2>Tournament Registration</h2>
+            <form id="registrationForm" method="POST" action="/register">
+                <input type="text" name="id_name" placeholder="ID Name" required>
+                <input type="text" name="game_uid" placeholder="Game UID" required>
+                <input type="text" name="squad_name" placeholder="Squad Name" required>
+                <button type="submit">Submit</button>
+            </form>
         </div>
-        <footer>
-            Free Fire Tournament Registration &copy; 2024
-        </footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
     '''
@@ -94,7 +79,7 @@ def send_email(id_name, game_uid, squad_name):
     # Email configuration
     msg = MIMEMultipart()
     msg['From'] = EMAIL
-    msg['To'] = "nmesportsofficial1@gmail.com"  # New recipient email
+    msg['To'] = EMAIL
     msg['Subject'] = "New Free Fire Tournament Registration"
     
     # Email content
@@ -114,7 +99,7 @@ def send_email(id_name, game_uid, squad_name):
         server.starttls()
         server.login(EMAIL, PASSWORD)
         text = msg.as_string()
-        server.sendmail(EMAIL, "nmesportsofficial1@gmail.com", text)
+        server.sendmail(EMAIL, EMAIL, text)
         server.quit()
         return True
     except Exception as e:
@@ -127,44 +112,11 @@ def register():
     game_uid = request.form.get('game_uid')
     squad_name = request.form.get('squad_name')
     
+    # Send email with the registration details
     if send_email(id_name, game_uid, squad_name):
-        return '''
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-            <title>Registration Successful</title>
-        </head>
-        <body>
-            <div class="container mt-5">
-                <div class="alert alert-success" role="alert">
-                    Registration Successful! A confirmation email has been sent.
-                </div>
-            </div>
-        </body>
-        </html>
-        '''
+        return "Registration Successful! Email sent."
     else:
-        return '''
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-            <title>Registration Failed</title>
-        </head>
-        <body>
-            <div class="container mt-5">
-                <div class="alert alert-danger" role="alert">
-                    Registration Failed! Unable to send email.
-                </div>
-            </div>
-        </body>
-        </html>
-        '''
+        return "Registration Failed! Unable to send email."
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
