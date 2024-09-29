@@ -6,8 +6,74 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 
 # Replace with your email and app password
-EMAIL = "vgboss91@gmail.com"
-PASSWORD = "no_option"
+EMAIL = "your-email@gmail.com"
+PASSWORD = "your-app-password"
+
+# Serve the HTML form at the root URL
+@app.route('/')
+def home():
+    return '''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Free Fire Tournament Registration</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .registration-form {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 300px;
+            }
+            .registration-form h2 {
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .registration-form input[type="text"], .registration-form input[type="number"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .registration-form button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .registration-form button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="registration-form">
+            <h2>Tournament Registration</h2>
+            <form id="registrationForm" method="POST" action="/register">
+                <input type="text" name="id_name" placeholder="ID Name" required>
+                <input type="text" name="game_uid" placeholder="Game UID" required>
+                <input type="text" name="squad_name" placeholder="Squad Name" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+    </html>
+    '''
 
 def send_email(id_name, game_uid, squad_name):
     # Email configuration
