@@ -6,8 +6,8 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 
 # Replace with your email and app password
-EMAIL = "vgboss91@gmail.com"
-PASSWORD = "no_option"
+EMAIL = "gohan3thesaiyan@gmail.com"
+PASSWORD = "no_option3"
 
 # Serve the HTML form at the root URL
 @app.route('/')
