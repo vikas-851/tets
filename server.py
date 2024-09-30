@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Replace with your email and app password
 EMAIL = "vgboss91@gmail.com"
-PASSWORD = "your-email-password"
+PASSWORD = "gvcr csbf shkw vrhh"
 
 # HTML Templates in Python strings
 index_html = """
