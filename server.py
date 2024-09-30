@@ -21,26 +21,67 @@ index_html = """
     <style>
         body {
             background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        }
+        .header {
+            background-image: url('https://example.com/tournament-banner.jpg'); /* Replace with a real banner image URL */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px #000;
         }
         .registration-form {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px 0px #ccc;
-            max-width: 400px;
-            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
         }
         h2 {
             text-align: center;
             margin-bottom: 20px;
         }
+        .about-section {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #343a40;
+            color: white;
+        }
+        .about-section h3 {
+            font-size: 2.5rem;
+        }
+        .about-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
+
+    <div class="header">
+        <h1>Free Fire Tournament 2024</h1>
+        <p>Register now and battle to win exciting prizes!</p>
+    </div>
+
+    <div class="about-section">
+        <h3>About the Tournament</h3>
+        <p>Join the ultimate Free Fire battle and compete with the best players. Gear up for an action-packed tournament, where the top players win amazing prizes. Showcase your skills and lead your squad to victory!</p>
+    </div>
+
     <div class="registration-form">
         <h2>Register for Tournament</h2>
         <form action="/register" method="POST">
@@ -59,6 +100,11 @@ index_html = """
             <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
     </div>
+
+    <footer>
+        <p>&copy; 2024 Free Fire Tournament. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
 """
@@ -92,6 +138,7 @@ success_html = """
     <div class="success-message">
         <h2>Registration Successful!</h2>
         <p>Thank you for registering for the tournament.</p>
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
     </div>
 </body>
 </html>
@@ -126,6 +173,7 @@ failure_html = """
     <div class="failure-message">
         <h2>Registration Failed</h2>
         <p>We encountered an error while processing your registration. Please try again.</p>
+        <a href="/" class="btn btn-danger mt-3">Back to Home</a>
     </div>
 </body>
 </html>
